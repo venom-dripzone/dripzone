@@ -22,11 +22,4 @@ urlpatterns = [
         views.remove_from_cart,
         name='remove_from_cart',
     ),
-
-    # Temporary admin setup endpoint
-    path(
-        'temporary-admin-setup/',
-        views.temporary_admin_setup,
-        name='temporary_admin_setup',
-    ),
 ]
