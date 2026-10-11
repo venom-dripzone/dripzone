@@ -1,11 +1,13 @@
+from decimal import Decimal
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
-from decimal import Decimal
-from .forms import CheckoutForm
-from .models import Product, Order, OrderItem
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 
+from .forms import CheckoutForm
+from .models import Product, Order, OrderItem
 
 def index(request):
     products = Product.objects.all()
