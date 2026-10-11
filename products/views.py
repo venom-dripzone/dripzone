@@ -237,11 +237,14 @@ def temporary_admin_setup(request):
     username = request.headers.get("X-Admin-Username", "")
     password = request.headers.get("X-Admin-Password", "")
 
-    if not username or not password or len(password) < 12:
-        return HttpResponse(
-            "Provide a username and a password of at least 12 characters.",
-            status=400,
-        )
+    if not username:
+        return HttpResponse("Missing username header.", status=400)
+
+    if not password:
+        return HttpResponse("Missing password header.", status=400)
+
+    if len(password) < 12:
+        return HttpResponse("Password must be at least 12 characters.", status=400)
 
     if User.objects.filter(username=username).exists():
         return HttpResponse("That username already exists.", status=409)
