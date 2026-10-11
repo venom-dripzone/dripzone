@@ -1,0 +1,415 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}DripZone | Elevate Your Style{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+
+    <!-- Modern fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --dz-black: #111111;
+            --dz-white: #ffffff;
+            --dz-gray: #777777;
+            --dz-light: #f6f6f6;
+            --dz-border: #e9e9e9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dz-black);
+            background: var(--dz-white);
+            margin: 0;
+        }
+
+        /* Announcement bar */
+        .announcement-bar {
+            background: var(--dz-black);
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Navigation */
+        .dz-navbar {
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid var(--dz-border);
+            padding: 18px 0;
+        }
+
+        .dz-brand {
+            color: var(--dz-black) !important;
+            font-size: 27px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            text-decoration: none !important;
+        }
+
+        .dz-brand span {
+            color: #888888;
+        }
+
+        .dz-nav-link {
+            color: #333333 !important;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-right: 20px;
+        }
+
+        .dz-nav-link:hover {
+            color: #888888 !important;
+        }
+
+        .dz-cart-btn {
+            display: inline-block;
+            background: var(--dz-black);
+            color: white !important;
+            padding: 12px 19px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: 0.2s ease;
+        }
+
+        .dz-cart-btn:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
+        /* Main page content */
+        .dz-main {
+            min-height: 65vh;
+            padding-top: 35px;
+            padding-bottom: 65px;
+        }
+
+        /* General headings */
+        h1, h2, h3, h4, h5 {
+            font-weight: 800;
+            letter-spacing: -0.7px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--dz-black);
+            border-color: var(--dz-black);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: #333333;
+            border-color: #333333;
+        }
+
+        .btn-outline-primary {
+            color: var(--dz-black);
+            border-color: var(--dz-black);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--dz-black);
+            border-color: var(--dz-black);
+        }
+
+        /* Form controls */
+        .form-control {
+            border: 1px solid #dddddd;
+            border-radius: 0;
+            min-height: 44px;
+            box-shadow: none !important;
+        }
+
+        .form-control:focus {
+            border-color: var(--dz-black);
+        }
+
+        /* Footer */
+        .dz-footer {
+            background: var(--dz-black);
+            color: #cccccc;
+            padding: 45px 0 25px;
+        }
+
+        .dz-footer-brand {
+            color: white;
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .dz-footer p {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .dz-footer-bottom {
+            border-top: 1px solid #333333;
+            margin-top: 25px;
+            padding-top: 20px;
+            font-size: 11px;
+            color: #999999;
+        }
+
+        /* Small screens */
+        @media (max-width: 767px) {
+            .dz-navbar {
+                padding: 13px 0;
+            }
+
+            .dz-brand {
+                font-size: 23px;
+            }
+
+            .dz-nav-link {
+                margin: 8px 0;
+            }
+
+            .dz-main {
+                padding-top: 25px;
+                padding-bottom: 40px;
+            }
+        }
+
+/* ==================================
+   DRIPZONE MOBILE RESPONSIVENESS
+   ================================== */
+
+/* Prevent accidental horizontal scrolling */
+html {
+    width: 100%;
+    overflow-x: clip;
+}
+
+body {
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* Keep page content inside the screen */
+.dz-main {
+    min-width: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Make images fit their containers */
+img {
+    max-width: 100%;
+}
+
+/* Make form controls easier to use on touch screens */
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+button,
+.btn,
+.dz-cart-btn,
+.dz-continue-btn,
+.cart-checkout-btn {
+    min-height: 42px;
+}
+
+/* Tablets and smaller screens */
+@media (max-width: 767px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .dz-navbar .container {
+        flex-wrap: wrap;
+    }
+
+    .dz-navbar .navbar-collapse {
+        width: 100%;
+        padding-top: 15px;
+    }
+
+    .dz-navbar .navbar-nav {
+        align-items: stretch !important;
+    }
+
+    .dz-nav-link {
+        display: block;
+        padding: 10px 0 !important;
+    }
+
+    .dz-cart-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        margin-top: 8px;
+    }
+
+    .dz-main {
+        padding-top: 22px;
+        padding-bottom: 35px;
+    }
+
+    .dz-footer {
+        padding-top: 32px;
+    }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+    .announcement-bar {
+        padding: 9px 12px;
+        font-size: 9px;
+        letter-spacing: 1.2px;
+    }
+
+    .dz-brand {
+        font-size: 22px;
+    }
+
+    .dz-main {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    h1 {
+        overflow-wrap: anywhere;
+    }
+
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Announcement bar -->
+    <div class="announcement-bar">
+        Fresh looks. Bold moves. Welcome to DripZone.
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md navbar-light dz-navbar">
+        <div class="container">
+
+            <a class="navbar-brand dz-brand" href="{% url 'index' %}">
+                DRIP<span>ZONE.</span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-toggle="collapse" data-target="#dzNavbar"
+                    aria-controls="dzNavbar" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="dzNavbar">
+                <ul class="navbar-nav ml-auto align-items-md-center">
+                    <li class="nav-item">
+                        <a class="nav-link dz-nav-link"
+                           href="{% url 'index' %}">Shop</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'cart' %}" class="dz-cart-btn">
+                            🛒 My Cart
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container dz-main">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                     role="alert">
+                    {{ message }}
+                    <button type="button" class="close"
+                            data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dz-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="dz-footer-brand">DRIPZONE.</div>
+                    <p class="mt-3">
+                        Your style. Your rules. Discover looks that make
+                        a statement and bring your everyday drip to life.
+                    </p>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <h6 class="text-white font-weight-bold">QUICK LINKS</h6>
+                    <p class="mt-3 mb-2">
+                        <a href="{% url 'index' %}"
+                           class="text-white">Shop Products</a>
+                    </p>
+                    <p>
+                        <a href="{% url 'cart' %}"
+                           class="text-white">Shopping Cart</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="dz-footer-bottom">
+                &copy; {% now "Y" %} DripZone. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

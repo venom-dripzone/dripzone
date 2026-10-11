@@ -1,0 +1,528 @@
+
+{% extends 'products/base.html' %}
+
+{% block title %}Shopping Cart | DripZone{% endblock %}
+
+{% block content %}
+
+
+<style>
+    .cart-page {
+        width: 100%;
+        max-width: 1050px;
+        min-width: 0;
+        margin: 10px auto;
+    }
+
+    .cart-heading {
+        margin-bottom: 30px;
+    }
+
+    .cart-eyebrow {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #777;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    .cart-heading h1 {
+        font-size: clamp(30px, 5vw, 42px);
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        margin-bottom: 8px;
+        overflow-wrap: anywhere;
+    }
+
+    .cart-heading p {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 0;
+    }
+
+    .cart-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 25px;
+        align-items: start;
+        min-width: 0;
+    }
+
+    .cart-items-panel,
+    .cart-summary {
+        min-width: 0;
+        border: 1px solid #e9e9e9;
+        background: #fff;
+    }
+
+    .cart-panel-heading {
+        padding: 20px 22px;
+        border-bottom: 1px solid #e9e9e9;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    .cart-item {
+        padding: 22px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 20px;
+        border-bottom: 1px solid #eee;
+        min-width: 0;
+    }
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .cart-item > div {
+        min-width: 0;
+    }
+
+    .cart-item-name {
+        font-size: 16px;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+        margin-bottom: 7px;
+    }
+
+    .cart-item-price {
+        font-size: 13px;
+        color: #777;
+        margin-bottom: 16px;
+    }
+
+    .cart-item-subtotal {
+        font-size: 16px;
+        font-weight: 900;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .cart-form-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .cart-quantity {
+        width: 78px;
+        max-width: 100%;
+        min-height: 44px;
+        border: 1px solid #ddd;
+        padding: 8px;
+        border-radius: 0;
+        font-size: 16px;
+    }
+
+    .cart-update-btn {
+        min-height: 44px;
+        padding: 10px 14px;
+        background: #fff;
+        border: 1px solid #111;
+        color: #111;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .cart-update-btn:hover {
+        background: #111;
+        color: #fff;
+    }
+
+    .cart-remove-btn {
+        min-height: 42px;
+        padding: 8px 0;
+        border: none;
+        background: transparent;
+        color: #777;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .cart-remove-btn:hover {
+        color: #b00020;
+    }
+
+    .cart-summary {
+        background: #f7f7f7;
+        padding: 24px;
+    }
+
+    .cart-summary h2 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 22px;
+    }
+
+    .summary-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 15px;
+        font-size: 13px;
+        color: #555;
+    }
+
+    .summary-line span:last-child {
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        padding-top: 18px;
+        margin-top: 18px;
+        border-top: 1px solid #ddd;
+    }
+
+    .summary-total span:first-child {
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .summary-total strong {
+        font-size: 25px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        overflow-wrap: anywhere;
+        text-align: right;
+    }
+
+    .cart-checkout-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 48px;
+        margin-top: 23px;
+        padding: 14px 12px;
+        background: #111;
+        color: #fff !important;
+        border: 1px solid #111;
+        text-align: center;
+        text-decoration: none !important;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+        transition: background 0.2s ease;
+    }
+
+    .cart-checkout-btn:hover {
+        background: #333;
+    }
+
+    .cart-continue-btn {
+        display: block;
+        text-align: center;
+        margin-top: 17px;
+        padding: 8px 0;
+        color: #333;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    .cart-empty {
+        text-align: center;
+        padding: 65px 20px;
+        border: 1px solid #e9e9e9;
+        background: #f8f8f8;
+    }
+
+    .cart-empty-icon {
+        font-size: 42px;
+        margin-bottom: 15px;
+    }
+
+    .cart-empty h2 {
+        font-size: 25px;
+        font-weight: 900;
+        overflow-wrap: anywhere;
+    }
+
+    .cart-empty p {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .cart-shop-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        max-width: 100%;
+        padding: 13px 22px;
+        background: #111;
+        color: #fff !important;
+        text-decoration: none !important;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
+
+    /* Tablets and mobile screens */
+    @media (max-width: 767px) {
+        .cart-page {
+            margin-top: 5px;
+        }
+
+        .cart-layout {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 20px;
+        }
+
+        .cart-item {
+            padding: 18px 15px;
+            gap: 12px;
+        }
+
+        .cart-panel-heading {
+            padding: 18px 15px;
+        }
+
+        .cart-summary {
+            padding: 22px;
+        }
+    }
+
+    /* Small mobile phones */
+    @media (max-width: 480px) {
+        .cart-heading {
+            margin-bottom: 22px;
+        }
+
+        .cart-heading h1 {
+            font-size: 32px;
+        }
+
+        .cart-heading p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cart-item {
+            grid-template-columns: minmax(0, 1fr) auto;
+            padding: 16px 12px;
+            gap: 8px;
+        }
+
+        .cart-item-name {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .cart-item-price {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cart-item-subtotal {
+            font-size: 14px;
+            max-width: 110px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        .cart-form-row {
+            gap: 7px;
+        }
+
+        .cart-quantity {
+            width: 70px;
+        }
+
+        .cart-update-btn {
+            padding: 9px 10px;
+        }
+
+        .cart-summary {
+            padding: 18px 15px;
+        }
+
+        .summary-total strong {
+            font-size: 22px;
+        }
+
+        .cart-empty {
+            padding: 45px 15px;
+        }
+
+        .cart-empty h2 {
+            font-size: 22px;
+        }
+    }
+
+    /* Extra-small phones */
+    @media (max-width: 340px) {
+        .cart-item {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .cart-item-subtotal {
+            text-align: left;
+            max-width: none;
+            font-size: 16px;
+        }
+
+        .cart-summary {
+            padding: 15px 12px;
+        }
+
+        .summary-total strong {
+            font-size: 20px;
+        }
+    }
+</style>
+
+
+<div class="cart-page">
+
+    <div class="cart-heading">
+        <div class="cart-eyebrow">Your DripZone Selection</div>
+        <h1>YOUR CART.</h1>
+        <p>Review your picks before making them yours.</p>
+    </div>
+
+    {% if items %}
+
+        <div class="cart-layout">
+
+            <!-- Cart products -->
+            <section class="cart-items-panel">
+                <div class="cart-panel-heading">
+                    Your Items ({{ items|length }})
+                </div>
+
+                {% for item in items %}
+                    <div class="cart-item">
+
+                        <div>
+                            <div class="cart-item-name">
+                                {{ item.product.name }}
+                            </div>
+
+                            <div class="cart-item-price">
+                                Price: ${{ item.product.price|floatformat:2 }}
+                            </div>
+
+                            <form
+                                action="{% url 'update_cart' item.product.id %}"
+                                method="post"
+                                class="cart-form-row"
+                            >
+                                {% csrf_token %}
+
+                                <label class="sr-only"
+                                       for="quantity-{{ item.product.id }}">
+                                    Quantity for {{ item.product.name }}
+                                </label>
+
+                                <input
+                                    id="quantity-{{ item.product.id }}"
+                                    type="number"
+                                    name="quantity"
+                                    value="{{ item.quantity }}"
+                                    min="1"
+                                    class="cart-quantity"
+                                    required
+                                >
+
+                                <button type="submit"
+                                        class="cart-update-btn">
+                                    Update
+                                </button>
+                            </form>
+
+                            <form
+                                action="{% url 'remove_from_cart' item.product.id %}"
+                                method="post"
+                                class="mt-2"
+                            >
+                                {% csrf_token %}
+
+                                <button type="submit"
+                                        class="cart-remove-btn">
+                                    Remove item
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="cart-item-subtotal">
+                            ${{ item.subtotal|floatformat:2 }}
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </section>
+
+            <!-- Order summary -->
+            <aside class="cart-summary">
+                <h2>Order Summary</h2>
+
+                <div class="summary-line">
+                    <span>Items</span>
+                    <span>{{ items|length }}</span>
+                </div>
+
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <span>Calculated at checkout</span>
+                </div>
+
+                <div class="summary-total">
+                    <span>SUBTOTAL</span>
+                    <strong>${{ total|floatformat:2 }}</strong>
+                </div>
+
+                <a href="{% url 'checkout' %}"
+                   class="cart-checkout-btn">
+                    Proceed to Checkout &rarr;
+                </a>
+
+                <a href="{% url 'index' %}"
+                   class="cart-continue-btn">
+                    &larr; Continue Shopping
+                </a>
+            </aside>
+
+        </div>
+
+    {% else %}
+
+        <div class="cart-empty">
+            <div class="cart-empty-icon">🛒</div>
+
+            <h2>Your cart is empty.</h2>
+
+            <p>
+                Your next favourite fit is waiting.
+                Explore the collection and find your drip.
+            </p>
+
+            <a href="{% url 'index' %}" class="cart-shop-btn">
+                Explore the Collection
+            </a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

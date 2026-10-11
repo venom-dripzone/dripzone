@@ -1,0 +1,409 @@
+
+{% extends 'products/base.html' %}
+
+{% block title %}Order Confirmed | DripZone{% endblock %}
+
+{% block content %}
+
+
+<style>
+    .success-page {
+        width: 100%;
+        max-width: 850px;
+        min-width: 0;
+        margin: 15px auto;
+    }
+
+    .success-header {
+        background: #111;
+        color: #fff;
+        padding: 45px 25px;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .success-icon {
+        width: 65px;
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        font-size: 30px;
+    }
+
+    .success-header .eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: #bbb;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    .success-header h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        margin-bottom: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    .success-header p {
+        color: #ccc;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    .receipt-card {
+        min-width: 0;
+        border: 1px solid #e7e7e7;
+        background: #fff;
+    }
+
+    .receipt-section {
+        min-width: 0;
+        padding: 25px 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .section-label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: #777;
+        margin-bottom: 18px;
+    }
+
+    .order-number {
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .order-caption {
+        color: #777;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .detail-label {
+        color: #777;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .detail-value {
+        font-size: 14px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        line-height: 1.6;
+    }
+
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+        min-width: 0;
+    }
+
+    .item-row > div:first-child {
+        min-width: 0;
+    }
+
+    .item-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .item-name {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .item-quantity {
+        color: #777;
+        font-size: 12px;
+    }
+
+    .item-price {
+        flex-shrink: 0;
+        font-size: 14px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .total-section {
+        background: #f7f7f7;
+        padding: 25px 30px;
+    }
+
+    .total-label {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .total-amount {
+        font-size: clamp(25px, 5vw, 34px);
+        font-weight: 900;
+        letter-spacing: -1px;
+        overflow-wrap: anywhere;
+        text-align: right;
+    }
+
+    .status-label {
+        display: inline-block;
+        max-width: 100%;
+        padding: 7px 12px;
+        background: #eee;
+        color: #111;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        overflow-wrap: anywhere;
+    }
+
+    .receipt-footer {
+        padding: 25px 30px;
+        text-align: center;
+    }
+
+    .dz-continue-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        min-height: 46px;
+        background: #111;
+        color: #fff !important;
+        padding: 14px 25px;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+        transition: background 0.2s ease;
+    }
+
+    .dz-continue-btn:hover {
+        background: #333;
+    }
+
+    .receipt-note {
+        color: #777;
+        font-size: 12px;
+        line-height: 1.7;
+        margin-top: 18px;
+        margin-bottom: 0;
+    }
+
+    /* Mobile and tablet improvements */
+    @media (max-width: 575px) {
+        .success-page {
+            margin-top: 5px;
+        }
+
+        .success-header {
+            padding: 35px 18px;
+        }
+
+        .success-icon {
+            width: 56px;
+            height: 56px;
+            font-size: 26px;
+            margin-bottom: 17px;
+        }
+
+        .success-header .eyebrow {
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .success-header h1 {
+            font-size: clamp(27px, 7vw, 36px);
+            letter-spacing: -1px;
+        }
+
+        .success-header p {
+            font-size: 13px;
+        }
+
+        .receipt-section,
+        .total-section {
+            padding: 22px 18px;
+        }
+
+        .receipt-footer {
+            padding: 22px 18px;
+        }
+
+        .order-number {
+            font-size: 22px;
+        }
+
+        .total-label {
+            font-size: 12px;
+        }
+
+        .dz-continue-btn {
+            width: 100%;
+            padding: 14px 12px;
+        }
+    }
+
+    /* Very small phones */
+    @media (max-width: 360px) {
+        .success-header {
+            padding: 30px 14px;
+        }
+
+        .receipt-section,
+        .total-section,
+        .receipt-footer {
+            padding: 18px 13px;
+        }
+
+        .item-row {
+            gap: 10px;
+        }
+
+        .item-name {
+            font-size: 13px;
+        }
+
+        .item-price {
+            font-size: 13px;
+        }
+
+        .total-amount {
+            font-size: 23px;
+        }
+    }
+</style>
+
+
+<div class="success-page">
+
+    <!-- Success banner -->
+    <div class="success-header">
+        <div class="success-icon" aria-hidden="true">&#10003;</div>
+
+        <div class="eyebrow">DripZone Order Confirmation</div>
+
+        <h1>YOU'RE ALL SET.</h1>
+
+        <p>Thanks for shopping with DripZone. Your order has been placed!</p>
+    </div>
+
+    <!-- Order receipt -->
+    <div class="receipt-card">
+
+        <!-- Order details -->
+        <div class="receipt-section">
+            <div class="section-label">Order Details</div>
+
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="detail-label">Order Number</div>
+                    <div class="order-number">#{{ order.id }}</div>
+                    <div class="order-caption">Keep this number for reference.</div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="detail-label">Order Status</div>
+                    <div class="mt-2">
+                        <span class="status-label">
+                            {{ order.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer details -->
+        <div class="receipt-section">
+            <div class="section-label">Delivery Information</div>
+
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <div class="detail-label">Customer</div>
+                    <div class="detail-value">{{ order.customer_name }}</div>
+                </div>
+
+                <div class="col-sm-6 mb-3">
+                    <div class="detail-label">Phone</div>
+                    <div class="detail-value">{{ order.phone }}</div>
+                </div>
+
+                <div class="col-12">
+                    <div class="detail-label">Delivery Address</div>
+                    <div class="detail-value">{{ order.address }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purchased items -->
+        <div class="receipt-section">
+            <div class="section-label">Your Items</div>
+
+            {% for item in order.items.all %}
+                <div class="item-row">
+                    <div>
+                        <div class="item-name">
+                            {{ item.product_name }}
+                        </div>
+                        <div class="item-quantity">
+                            Quantity: {{ item.quantity }}
+                        </div>
+                    </div>
+
+                    <div class="item-price">
+                        ${{ item.subtotal|floatformat:2 }}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted mb-0">
+                    No order items were found.
+                </p>
+            {% endfor %}
+        </div>
+
+        <!-- Order total -->
+        <div class="total-section">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="total-label">TOTAL ORDER AMOUNT</div>
+
+                <div class="total-amount">
+                    ${{ order.total|floatformat:2 }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Continue shopping -->
+        <div class="receipt-footer">
+            <a href="{% url 'index' %}" class="dz-continue-btn">
+                Continue Shopping &rarr;
+            </a>
+
+            <p class="receipt-note">
+                Thanks for choosing DripZone. Stay fresh. Stay original.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

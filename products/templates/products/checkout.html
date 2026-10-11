@@ -1,0 +1,407 @@
+
+{% extends 'products/base.html' %}
+
+{% block title %}Checkout | DripZone{% endblock %}
+
+{% block content %}
+
+<style>
+    .dz-checkout {
+        max-width: 1100px;
+        margin: 10px auto 35px;
+        min-width: 0;
+    }
+
+    .dz-checkout-header {
+        margin-bottom: 30px;
+    }
+
+    .dz-checkout-eyebrow {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #777;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    .dz-checkout-header h1 {
+        font-size: clamp(32px, 5vw, 44px);
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        margin-bottom: 8px;
+        overflow-wrap: anywhere;
+    }
+
+    .dz-checkout-header p {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    .dz-checkout-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+        gap: 25px;
+        align-items: start;
+    }
+
+    .dz-checkout-panel {
+        min-width: 0;
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        padding: 28px;
+    }
+
+    .dz-checkout-panel h2 {
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 7px;
+    }
+
+    .dz-panel-description {
+        color: #777;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .dz-checkout-field {
+        margin-bottom: 19px;
+        min-width: 0;
+    }
+
+    .dz-checkout-field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .dz-checkout-field input,
+    .dz-checkout-field select,
+    .dz-checkout-field textarea {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        min-height: 46px;
+        padding: 11px 12px;
+        border: 1px solid #ddd;
+        border-radius: 0;
+        background: #fff;
+        color: #111;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .dz-checkout-field textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .dz-checkout-field input:focus,
+    .dz-checkout-field select:focus,
+    .dz-checkout-field textarea:focus {
+        outline: 2px solid #111;
+        outline-offset: 1px;
+        border-color: #111;
+    }
+
+    .dz-field-error {
+        display: block;
+        color: #b00020;
+        font-size: 12px;
+        margin-top: 6px;
+        overflow-wrap: anywhere;
+    }
+
+    .dz-checkout-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .dz-place-order,
+    .dz-back-cart {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 13px 18px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-align: center;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .dz-place-order {
+        flex: 1 1 180px;
+        border: 1px solid #111;
+        background: #111;
+        color: #fff;
+    }
+
+    .dz-place-order:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    .dz-back-cart {
+        flex: 1 1 130px;
+        border: 1px solid #ddd;
+        background: #fff;
+        color: #111;
+    }
+
+    .dz-back-cart:hover {
+        border-color: #111;
+        color: #111;
+    }
+
+    .dz-order-summary {
+        background: #f7f7f7;
+    }
+
+    .dz-order-items {
+        margin-top: 23px;
+    }
+
+    .dz-order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 14px 0;
+        border-bottom: 1px solid #e5e5e5;
+        font-size: 13px;
+    }
+
+    .dz-order-item-name {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+    }
+
+    .dz-order-item-price {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+
+    .dz-order-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid #d8d8d8;
+    }
+
+    .dz-order-total span {
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .dz-order-total strong {
+        font-size: 25px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    .dz-payment-note {
+        margin-top: 22px;
+        padding: 13px;
+        background: #fff;
+        color: #777;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .dz-checkout-alert {
+        margin-bottom: 20px;
+        padding: 13px 15px;
+        border: 1px solid #e5c76b;
+        background: #fff8df;
+        color: #594710;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+
+    /* Tablets and smaller screens */
+    @media (max-width: 767px) {
+        .dz-checkout {
+            margin-top: 5px;
+        }
+
+        .dz-checkout-grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 18px;
+        }
+
+        .dz-checkout-panel {
+            padding: 23px 20px;
+        }
+
+        .dz-order-summary {
+            order: 2;
+        }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+        .dz-checkout-header {
+            margin-bottom: 22px;
+        }
+
+        .dz-checkout-header h1 {
+            font-size: 32px;
+        }
+
+        .dz-checkout-header p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .dz-checkout-panel {
+            padding: 20px 15px;
+        }
+
+        .dz-checkout-panel h2 {
+            font-size: 18px;
+        }
+
+        .dz-checkout-field {
+            margin-bottom: 17px;
+        }
+
+        .dz-checkout-actions {
+            flex-direction: column;
+        }
+
+        .dz-place-order,
+        .dz-back-cart {
+            width: 100%;
+            flex-basis: auto;
+        }
+
+        .dz-order-total strong {
+            font-size: 22px;
+        }
+    }
+</style>
+
+<div class="dz-checkout">
+
+    <header class="dz-checkout-header">
+        <div class="dz-checkout-eyebrow">DripZone • Secure Checkout</div>
+        <h1>CHECKOUT.</h1>
+        <p>Confirm your delivery details and review your order.</p>
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="dz-checkout-alert" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="dz-checkout-grid">
+
+        <!-- Delivery form -->
+        <section class="dz-checkout-panel">
+            <h2>Delivery Details</h2>
+            <p class="dz-panel-description">
+                Enter your information so we know where to deliver your order.
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="dz-checkout-field">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                            {% if field.field.required %}*{% endif %}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                        {% endif %}
+
+                        {% for error in field.errors %}
+                            <span class="dz-field-error">
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="dz-field-error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="dz-checkout-actions">
+                    <button type="submit" class="dz-place-order">
+                        Place Order →
+                    </button>
+
+                    <a href="{% url 'cart' %}" class="dz-back-cart">
+                        Back to Cart
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <!-- Order summary -->
+        <aside class="dz-checkout-panel dz-order-summary">
+            <h2>Your Order</h2>
+            <p class="dz-panel-description">
+                Here's what you've selected.
+            </p>
+
+            <div class="dz-order-items">
+                {% for item in items %}
+                    <div class="dz-order-item">
+                        <span class="dz-order-item-name">
+                            {{ item.product.name }} × {{ item.quantity }}
+                        </span>
+
+                        <span class="dz-order-item-price">
+                            ${{ item.subtotal|floatformat:2 }}
+                        </span>
+                    </div>
+                {% empty %}
+                    <p class="dz-panel-description">
+                        No items in your order.
+                    </p>
+                {% endfor %}
+            </div>
+
+            <div class="dz-order-total">
+                <span>ORDER TOTAL</span>
+                <strong>${{ total|floatformat:2 }}</strong>
+            </div>
+
+            <div class="dz-payment-note">
+                Payment options will be added later.
+            </div>
+        </aside>
+
+    </div>
+</div>
+
+{% endblock %}
