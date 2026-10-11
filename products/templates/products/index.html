@@ -301,23 +301,181 @@
             transform: none;
         }
     }
+    /* Premium DripZone hero redesign */
+.shop-hero {
+    background: #111;
+    color: #fff;
+    min-height: 370px;
+    padding: 55px 48px 30px;
+    margin-bottom: 55px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    isolation: isolate;
+}
+
+.shop-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+}
+
+.shop-hero-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c5ff41;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    margin-bottom: 25px;
+}
+
+.shop-hero-dot {
+    width: 7px;
+    height: 7px;
+    background: #c5ff41;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(197, 255, 65, 0.7);
+}
+
+.shop-hero h1 {
+    font-size: clamp(35px, 5.5vw, 68px);
+    font-weight: 950;
+    line-height: 0.99;
+    letter-spacing: -2.5px;
+    margin-bottom: 22px;
+}
+
+.shop-hero h1 span {
+    color: #c5ff41;
+}
+
+.shop-hero p {
+    max-width: 430px;
+    color: #c3c3c3;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.shop-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    background: #c5ff41;
+    color: #111;
+    padding: 15px 19px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.shop-hero-cta:hover {
+    background: #fff;
+    color: #111;
+    transform: translateY(-2px);
+}
+
+.shop-hero-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid #363636;
+    padding-top: 18px;
+    margin-top: 38px;
+    color: #888;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.shop-hero-decoration {
+    position: absolute;
+    z-index: 1;
+    right: -25px;
+    top: 12px;
+    color: rgba(255, 255, 255, 0.045);
+    font-size: clamp(180px, 30vw, 360px);
+    line-height: 1;
+    font-weight: 950;
+    letter-spacing: -25px;
+    pointer-events: none;
+    user-select: none;
+}
+
+@media (max-width: 575px) {
+    .shop-hero {
+        min-height: 350px;
+        padding: 35px 20px 22px;
+        margin-bottom: 38px;
+    }
+
+    .shop-hero-label {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        margin-bottom: 24px;
+    }
+
+    .shop-hero h1 {
+        font-size: clamp(32px, 8vw, 44px);
+        letter-spacing: -1.4px;
+    }
+
+    .shop-hero p {
+        font-size: 13px;
+    }
+
+    .shop-hero-note {
+        font-size: 8px;
+        letter-spacing: 0.7px;
+        margin-top: 30px;
+    }
+
+    .shop-hero-decoration {
+        right: -15px;
+        top: 90px;
+        font-size: 190px;
+    }
+}
 </style>
 
 
-<!-- Hero banner -->
+
+<!-- Premium DripZone hero -->
 <section class="shop-hero">
-    <div class="shop-hero-label">Welcome to DripZone</div>
+    <div class="shop-hero-content">
+        <div class="shop-hero-label">
+            <span class="shop-hero-dot"></span>
+            THE NEXT WAVE OF STREETWEAR
+        </div>
 
-    <h1>YOUR STYLE.<br>YOUR RULES.</h1>
+        <h1>BUILT DIFFERENT.<br><span>WORN YOUR WAY.</span></h1>
 
-    <p>
-        Discover your next favourite look. Shop bold essentials,
-        everyday fits, and streetwear made for your style.
-    </p>
+        <p>
+            Make your presence felt. Discover bold streetwear,
+            everyday essentials, and pieces that speak for themselves.
+        </p>
+
+        <a href="#collection" class="shop-hero-cta">
+            EXPLORE THE COLLECTION <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="shop-hero-note">
+            <span>DRIPZONE®</span>
+            <span>YOUR STYLE. YOUR RULES.</span>
+        </div>
+    </div>
+
+    <div class="shop-hero-decoration" aria-hidden="true">
+        <span>DZ</span>
+    </div>
 </section>
 
 <!-- Products heading -->
-<div class="shop-heading">
+<div class="shop-heading" id="collection">
     <div>
         <h2>Shop the Collection</h2>
         <p>Find your next favourite piece.</p>
