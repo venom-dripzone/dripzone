@@ -5,6 +5,12 @@ from decimal import Decimal
 from .forms import CheckoutForm
 from .models import Product, Order, OrderItem
 from django.views.decorators.http import require_POST
+import hmac
+import os
+
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -206,3 +212,44 @@ def checkout(request):
         'total': total,
     })
 
+
+@csrf_exempt
+def temporary_admin_setup(request):
+    # Only allow POST requests.
+    if request.method != "POST":
+        return HttpResponse("Method not allowed", status=405)
+
+    # Require the private token stored in Render.
+    expected_token = os.environ.get("LIVE_ADMIN_SETUP_TOKEN", "")
+    provided_token = request.headers.get("X-Admin-Setup-Token", "")
+
+    if not expected_token or not hmac.compare_digest(
+        provided_token, expected_token
+    ):
+        return HttpResponse("Forbidden", status=403)
+
+    User = get_user_model()
+
+    # Create the admin only if no superuser exists yet.
+    if User.objects.filter(is_superuser=True).exists():
+        return HttpResponse("Admin setup already completed.", status=409)
+
+    username = request.headers.get("X-Admin-Username", "")
+    password = request.headers.get("X-Admin-Password", "")
+
+    if not username or not password or len(password) < 12:
+        return HttpResponse(
+            "Provide a username and a password of at least 12 characters.",
+            status=400,
+        )
+
+    if User.objects.filter(username=username).exists():
+        return HttpResponse("That username already exists.", status=409)
+
+    User.objects.create_superuser(
+        username=username,
+        email="",
+        password=password,
+    )
+
+    return HttpResponse("Admin created. Remove this temporary endpoint now.")
