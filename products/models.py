@@ -1,11 +1,29 @@
 from django.db import models
 
 
+
 class Product(models.Model):
+    CATEGORY_CHOICES = [
+        ('electronics', 'Electronics & Gadgets'),
+        ('football_boots', 'Football Boots'),
+        ('glasses', 'Glasses'),
+        ('caps', 'Caps'),
+        ('gaming', 'Gaming'),
+    ]
+
     name = models.CharField(max_length=255)
     price = models.FloatField()
     stock = models.IntegerField()
     image_url = models.CharField(max_length=2083)
+    category = models.CharField(
+        max_length=30,
+        choices=CATEGORY_CHOICES,
+        default='electronics',
+    )
+
+    def __str__(self):
+        return self.name
+
 
 
 class Offer(models.Model):

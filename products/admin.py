@@ -7,8 +7,13 @@ class OfferAdmin(admin.ModelAdmin):
     list_display = ('code', 'discount')
 
 
+
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'stock')
+    list_display = ('name', 'category', 'price', 'stock')
+    list_filter = ('category',)
+    search_fields = ('name',)
+    list_editable = ('category', 'price', 'stock')
+
 
 
 class OrderItemInline(admin.TabularInline):
