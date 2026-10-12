@@ -465,7 +465,7 @@
                         </div>
 
                         <div class="cart-item-subtotal">
-                            ${{ item.subtotal|floatformat:2 }}
+                            ₦{{ item.subtotal|floatformat:2 }}
                         </div>
 
                     </div>
@@ -488,7 +488,7 @@
 
                 <div class="summary-total">
                     <span>SUBTOTAL</span>
-                    <strong>${{ total|floatformat:2 }}</strong>
+                    <strong>₦{{ total|floatformat:2 }}</strong>
                 </div>
 
                 <a href="{% url 'checkout' %}"
