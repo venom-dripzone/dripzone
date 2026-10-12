@@ -11,8 +11,18 @@ from .models import Product, Order, OrderItem
 
 def index(request):
     products = Product.objects.all()
-    return render(request, 'products/index.html', {'products':
-                                              products})
+
+    category = request.GET.get('category', '')
+    if category:
+        products = products.filter(category=category)
+
+    categories = Product.CATEGORY_CHOICES
+
+    return render(request, 'products/index.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': category,
+    })
 
 
 def new(request):

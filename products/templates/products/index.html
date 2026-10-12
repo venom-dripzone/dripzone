@@ -653,6 +653,55 @@
         transition: none;
     }
 }
+
+/* DripZone category filters */
+.dz-category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 28px;
+}
+
+.dz-category-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border: 1px solid #dedede;
+    background: #fff;
+    color: #111;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease, color 0.2s ease,
+                border-color 0.2s ease;
+}
+
+.dz-category-filter:hover,
+.dz-category-filter.active {
+    background: #c5ff41;
+    border-color: #c5ff41;
+    color: #111;
+}
+
+.dz-category-filter:focus-visible {
+    outline: 3px solid #8ab91b;
+    outline-offset: 3px;
+}
+
+@media (max-width: 575px) {
+    .dz-category-filters {
+        gap: 7px;
+        margin-bottom: 22px;
+    }
+
+    .dz-category-filter {
+        padding: 9px 11px;
+        font-size: 10px;
+    }
+}
+
 </style>
 
 
@@ -698,6 +747,22 @@
         🛒 View Cart
     </a>
 </div>
+
+
+<!-- DripZone category filters -->
+<nav class="dz-category-filters" aria-label="Filter products by category">
+    <a href="{% url 'index' %}#collection"
+       class="dz-category-filter {% if not selected_category %}active{% endif %}">
+        All Products
+    </a>
+
+    {% for value, label in categories %}
+        <a href="?category={{ value }}#collection"
+           class="dz-category-filter {% if selected_category == value %}active{% endif %}">
+            {{ label }}
+        </a>
+    {% endfor %}
+</nav>
 
 <!-- Product grid -->
 {% if products %}
